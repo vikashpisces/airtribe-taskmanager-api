@@ -62,6 +62,7 @@ app.post('/tasks', (req, res) => {
   }
 
   taskPayload.createdOn = new Date().toISOString()
+  taskPayload.priority = taskPayload.priority?.toLowerCase() || 'low'
   tasksData.push(taskPayload)
   return res.status(201).send('Task added successfully')
 })
@@ -76,6 +77,7 @@ app.put('/tasks/:id', (req, res) => {
   }
 
   const taskFound = tasksData.find(task => task.id === +taskIdToUpdate)
+  taskPayload.priority = taskPayload.priority?.toLowerCase() || 'low'
   Object.assign(taskFound, taskPayload)
   res.status(200).send('Task Updated Successfully.')
 })
@@ -91,6 +93,15 @@ app.delete('/tasks/:id', (req, res) => {
   res.status(200).send('Task deleted successfully')
 })
 
+app.get('/tasks/priority/:level', (req, res) => {
+  const level = req.params.level
+  if(!level || !Validator.PRIORITY.hasOwnProperty(level.toUpperCase())) {
+    return res.status(400).send('Invalid priority level')
+  }
+
+  const filteredTasksByPriority = tasksData.filter(task => task.priority?.toLowerCase() === level.toLowerCase())
+  return res.status(200).json(filteredTasksByPriority)
+})
 
 app.listen(PORT, (err) => {
   if (err) {

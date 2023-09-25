@@ -1,4 +1,10 @@
 class Validator {
+  static PRIORITY = {
+    LOW: 'low',
+    MEDIUM: 'medium',
+    HIGH: 'high'
+  }
+
   static validateTaskData(taskData = {}, tasksData = []) {
     const validation = {
       status: true,
@@ -34,6 +40,18 @@ class Validator {
         })
         return validation
       }
+
+      if (taskData.hasOwnProperty('priority')) {
+        if (!this.PRIORITY.hasOwnProperty(taskData.priority.toUpperCase())) {
+          Object.assign(validation, {
+            status: false,
+            message: 'Priority must be either low, medium or high'
+          })
+          return validation
+        }
+      } else {
+        taskData.priority = 'low'
+      }
       
       Object.assign(validation, {
         status: true,
@@ -54,7 +72,8 @@ class Validator {
     const TASK_SCHEMA = {
       title: 'string',
       description: 'string',
-      completed: 'boolean'
+      completed: 'boolean',
+      priority: 'string'
     }
 
     if (!taskId || !Number.isFinite(taskId)) {
@@ -97,11 +116,20 @@ class Validator {
       
     if ((taskPayload.hasOwnProperty('title') && !taskPayload.title) ||
       (taskPayload.hasOwnProperty('description') && !taskPayload.description)) {
+      return {
+        status: false,
+        message: 'Title or description cannot be left blank'
+      }
+    }
+    
+    if (taskPayload.hasOwnProperty('priority')) {
+      if (!this.PRIORITY.hasOwnProperty(taskPayload.priority.toUpperCase())) {
         return {
           status: false,
-          message: 'Title or description cannot be left blank'
+          message: 'Priority must be either low, medium or high'
         }
       }
+    }
 
     return {
       status: true,
