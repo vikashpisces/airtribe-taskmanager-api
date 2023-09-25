@@ -1,0 +1,202 @@
+{
+	"info": {
+		"_postman_id": "43fcecbe-619b-49e0-b225-42c1c136061a",
+		"name": "NODE | REST | Task Manager API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "29653814"
+	},
+	"item": [
+		{
+			"name": "Basic Functionality",
+			"item": [
+				{
+					"name": "GET ALL TASKS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3000/tasks"
+					},
+					"response": []
+				},
+				{
+					"name": "POST A TASK",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 5,\r\n    \"title\": \"Task new\",\r\n    \"description\": \"Task new description\",\r\n    \"completed\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/tasks"
+					},
+					"response": []
+				},
+				{
+					"name": "GET SINGLE TASK",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3000/tasks/5"
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE A TASK STATUS",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"completed\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/tasks/5"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE THE TASK",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Updated Task\",\r\n    \"description\": \"Updated task Description\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/tasks/7"
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE A TASK STATUS TITLE & DESC",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Updated Task\",\r\n    \"description\": \"Updated task Description\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/tasks/5"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sorting & Filter",
+			"item": [
+				{
+					"name": "GET ALL TASKS With Status Fillter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/tasks?completed=true&sortBy=createdOn",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "completed",
+									"value": "true"
+								},
+								{
+									"key": "sortBy",
+									"value": "createdOn"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL TASKS By Priority",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3000/tasks/priority/high"
+					},
+					"response": []
+				},
+				{
+					"name": "New Tasks without Priority",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 6,\r\n    \"title\": \"No Priority Task\",\r\n    \"description\": \"Task created with no priority\",\r\n    \"completed\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/tasks"
+					},
+					"response": []
+				},
+				{
+					"name": "New Tasks with Priority",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 7,\r\n    \"title\": \"Task new\",\r\n    \"description\": \"Task new description\",\r\n    \"completed\": false,\r\n    \"priority\": \"LOW\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/tasks"
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE A TASK Priority",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"priority\": \"HIGH\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/tasks/7"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
