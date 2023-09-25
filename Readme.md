@@ -42,7 +42,6 @@ curl --location 'http://localhost:3000/tasks?completed=true&sortBy=createdOn' //
 curl --location 'http://localhost:3000/tasks?completed=true&sortBy=-createdOn' // filter by completed status, sort by createdOn in descending order. Emphasis on the negative sign for descending order
 ```
 
-
 #### POST A TASK
 
 ``` 
@@ -55,10 +54,16 @@ curl --location 'http://localhost:3000/tasks' \
 }' 
 
 ```
+> NOTE: By Default, tasks are assigned a priority of **low** out of **high**, **medium** and **low**
 
 #### GET SINGLE TASK
 ``` 
 curl --location 'http://localhost:3000/tasks/5' 
+```
+
+#### GET TASKS filtered by priority: high, medium or low
+``` 
+curl --location 'http://localhost:3000/tasks/priority/low' 
 ```
 
 #### UPDATE A TASK STATUS
@@ -69,6 +74,14 @@ curl --location 'http://localhost:3000/tasks/5' \
     "title": "Task new",
     "description": "Task new description",
     "completed": true
+}'
+```
+
+#### UPDATE A TASK Priority
+```
+curl --location 'http://localhost:3000/tasks/5' \
+--data '{
+    "priority": "high"
 }'
 ```
 
