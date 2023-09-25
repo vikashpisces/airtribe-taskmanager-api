@@ -9,6 +9,10 @@ This project is a RESTful API developed using Node.js, Express.js, and NPM packa
 - `POST /tasks`: Create a new task.
 - `PUT /tasks/:id`: Update an existing task by its ID.
 - `DELETE /tasks/:id`: Delete a task by its ID.
+- `GET /tasks?completed=true`: Retrieve all tasks filtered by completed status.
+- `GET /tasks?sortBy=createdOn`: Retrieve all tasks sorted by createdOn in ascending order .
+- `GET /tasks?sortBy=-createdOn`: Retrieve all tasks sorted by createdOn in descending order.
+- `GET /tasks/priority/:level`: Retrieve all tasks filtered by priority.
 
 ## Installation
 
