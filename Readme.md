@@ -35,6 +35,14 @@ This project is a RESTful API developed using Node.js, Express.js, and NPM packa
 curl --location 'http://localhost:3000/tasks' 
 ```
 
+> **_NOTE:_**  Above GET /tasks API supports filter by field **completed** and sorting on field **createdOn** in query param. Example URIs are as follows:
+
+``` 
+curl --location 'http://localhost:3000/tasks?completed=true&sortBy=createdOn' // filter by completed status, sort by createdOn in ascending order
+curl --location 'http://localhost:3000/tasks?completed=true&sortBy=-createdOn' // filter by completed status, sort by createdOn in descending order. Emphasis on the negative sign for descending order
+```
+
+
 #### POST A TASK
 
 ``` 
