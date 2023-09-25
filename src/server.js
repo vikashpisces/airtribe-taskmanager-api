@@ -13,19 +13,36 @@ app.get('/', (req, res) => {
 
 
 app.get('/tasks', (req, res) => {
-  let { completed } = req.query
+  let { completed, sortBy } = req.query
+  let filteredTasks = tasksData
 
   if (typeof completed === 'string') {
     if (!['true', 'false'].includes(completed)) {
       return res.status(400).send('Completed query must be boolean true/false')
     }
+    
     completed = JSON.parse(completed)
-
-    const filteredTasks = tasksData.filter(task => task.completed === completed)
-    return res.status(200).json(filteredTasks)
+    filteredTasks = tasksData.filter(task => task.completed === completed)
   }
 
-  res.status(200).json(tasksData)
+  if (typeof sortBy === 'string') {
+    if(!['createdOn', '-createdOn'].includes(sortBy)) {
+      return res.status(400).send('sortBy query must be either createdOn or -createdOn')
+    }
+
+    const sortOrder = sortBy.startsWith('-') ? 'DESC' : 'ASC'
+    const SORT_KEY = sortOrder === 'ASC' ? 1 : -1 
+    sortBy = sortBy.replace('-', '')
+
+    filteredTasks = filteredTasks.sort((a, b) => {
+      const value1 = a[sortBy]
+      const value2 = b[sortBy]
+
+      return value1 > value2 ? SORT_KEY : value1 < value2 ? -SORT_KEY : 0
+    })
+  }
+
+  res.status(200).json(filteredTasks)
 })
 
 app.get('/tasks/:id', (req, res) => {
@@ -44,6 +61,7 @@ app.post('/tasks', (req, res) => {
     return res.status(400).send(validationInfo.message)
   }
 
+  taskPayload.createdOn = new Date().toISOString()
   tasksData.push(taskPayload)
   return res.status(201).send('Task added successfully')
 })
