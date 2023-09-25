@@ -13,6 +13,18 @@ app.get('/', (req, res) => {
 
 
 app.get('/tasks', (req, res) => {
+  let { completed } = req.query
+
+  if (typeof completed === 'string') {
+    if (!['true', 'false'].includes(completed)) {
+      return res.status(400).send('Completed query must be boolean true/false')
+    }
+    completed = JSON.parse(completed)
+
+    const filteredTasks = tasksData.filter(task => task.completed === completed)
+    return res.status(200).json(filteredTasks)
+  }
+
   res.status(200).json(tasksData)
 })
 
